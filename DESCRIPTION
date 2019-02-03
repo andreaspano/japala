@@ -1,0 +1,13 @@
+Package: japala
+Title: shortcuts
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Andrea",
+           family = "Spano",
+           role = c("aut", "cre"),
+           email = "andrea.spano@quantide.com")
+Description: Shortcuts.
+License: GPL
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
