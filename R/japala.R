@@ -1,8 +1,8 @@
-ll_ <- function(){
+.ll <- function(){
   ls(envir = globalenv(), all.names = TRUE)
 }
 
-l_ <- function(){
+.ls <- function(){
   ls(envir = globalenv(), all.names = FALSE)
 }
 
@@ -15,9 +15,9 @@ l_ <- function(){
 #' @title binding 
 .onLoad <- function(libname, pkgname) {
   ns <-  asNamespace(pkgname)
-  makeActiveBinding("ll", ll_,  env = ns) 
-  makeActiveBinding("l", l_,  env = ns) 
-  namespaceExport(ns, c('ll','l'))
+  makeActiveBinding(".ll", .ll,  env = ns) 
+  makeActiveBinding(".ls", .ls,  env = ns) 
+  namespaceExport(ns, c('.ll','.ls'))
 }
 
 
