@@ -16,6 +16,30 @@ ls <- function(){
 q <- function(){
   base::quit(save =  'no') 
 }
+# ---------------------------------------------------------------
+#' @title lst 
+#' @export 
+lst <- function() {
+
+  out <- tibble::tibble(obj = ll()) 
+  return(out)
+
+}
+# --------------------------------------------------------------- 
+#' @title devtools::load_all('.')
+dl <- function() {
+  devtools::load_all(path = '.')
+  invisible(NULL) 
+}  
+# --------------------------------------------------------------- 
+#' @title devtools::document()
+dd <- function() {
+  devtools::document(pkg = '.')
+  invisible(NULL) 
+}  
+
+#z <- sapply(ls(), function()
+#object.size(get(x, envir = globalenv())))
 
 
 
@@ -29,8 +53,11 @@ q <- function(){
   makeActiveBinding(".ll", ll,  env = ns) 
   makeActiveBinding(".l", ls,  env = ns)
   makeActiveBinding(".s", base::search,  env = ns)
- makeActiveBinding(".q", q,  env = ns)
-  namespaceExport(ns, c('.ll','.l', '.s', '.q'))
+  makeActiveBinding(".q", q,  env = ns)
+  makeActiveBinding(".dl", dl, env = ns)
+  makeActiveBinding(".dd", dd, env = ns)
+
+  namespaceExport(ns, c('.ll','.l', '.s', '.q', '.dd'))
 }
 
 andrea_quantide <-  utils::person(given =  'Andrea', 
