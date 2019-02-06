@@ -7,7 +7,7 @@ ll <- function(){
 # ---------------------------------------------------------------
 #' @title ls
 #' @description list all objects exclude hidden objects ls(all.names = F)
-ls <- function(){
+l <- function(){
   base::ls(envir = globalenv(), all.names = FALSE)
 }
 # ---------------------------------------------------------------
@@ -37,9 +37,25 @@ dd <- function() {
   devtools::document(pkg = '.')
   invisible(NULL) 
 }  
+# --------------------------------------------------------------- 
+#' @title enriched ls()
+#' @export
+what <- function() {
+  
+  # may decide to chenge
+  env <- globalenv()
+  
+  name  <- ls(all.names = TRUE, env = globalenv())
+  object <- lapply(name, get, envir = env)
+  size <- vapply(object, function(x) as.numeric(object.size(x)), FUN.VALUE = numeric(1))
+  typeof <- vapply(object, typeof, FUN.VALUE = character(1))
+  class  <- vapply(object, class, FUN.VALUE = character(1))
 
-#z <- sapply(ls(), function()
-#object.size(get(x, envir = globalenv())))
+  # return
+  data.frame(name, size , class , typeof, stringsAsFactors = FALSE)
+}  
+
+
 
 
 
@@ -51,13 +67,13 @@ dd <- function() {
 .onLoad <- function(libname, pkgname) {
   ns <-  asNamespace(pkgname)
   makeActiveBinding(".ll", ll,  env = ns) 
-  makeActiveBinding(".l", ls,  env = ns)
+  makeActiveBinding(".l", l,  env = ns)
   makeActiveBinding(".s", base::search,  env = ns)
   makeActiveBinding(".q", q,  env = ns)
   makeActiveBinding(".dl", dl, env = ns)
   makeActiveBinding(".dd", dd, env = ns)
 
-  namespaceExport(ns, c('.ll','.l', '.s', '.q', '.dd'))
+  namespaceExport(ns, c('.ll','.l', '.s', '.q', '.dd', '.dl'))
 }
 
 andrea_quantide <-  utils::person(given =  'Andrea', 
