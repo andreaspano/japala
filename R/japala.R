@@ -1,3 +1,11 @@
+#' @title rm(list = ls(all =  T))
+#' @description remove all objects included dotted ones
+rm <- function() {
+  all_names <- base::ls(all.names  = T, env = globalenv())
+  base::rm(list = all_names, envir = globalenv())
+  cat ( '---  deleted ', length(all_names) , 'objects ---', '\n')
+  invisible(NULL)
+}
 
 #' @title ll
 #' @description list all objects ls(all.names = T)
@@ -18,7 +26,6 @@ q <- function(){
 }
 # ---------------------------------------------------------------
 #' @title lst 
-#' @export 
 lst <- function() {
 
   out <- tibble::tibble(obj = ll()) 
@@ -50,10 +57,9 @@ di <- function() {
 
 # --------------------------------------------------------------- 
 #' @title enriched ls()
-#' @export
 o <- function() {
   
-  # may decide to chenge
+  # may decide to change
   env <- globalenv()
   
   name  <- ls(all.names = TRUE, env = globalenv())
@@ -65,8 +71,11 @@ o <- function() {
   # return
   data.frame(name, size , class , typeof, stringsAsFactors = FALSE)
 }  
-
-
+# --------------------------------------------------------------- 
+#' restart R session
+#' @export 
+#r <-  function() { system("R"); quit() }
+# ----------------------------------------------------------------
 
 
 
@@ -85,7 +94,9 @@ o <- function() {
   makeActiveBinding(".dd", dd, env = ns)
   makeActiveBinding(".di", di, env = ns)
   makeActiveBinding(".o", o, env = ns)
-  namespaceExport(ns, c('.ll','.l', '.s', '.q', '.dd', '.dl', '.o'))
+  makeActiveBinding(".rm", rm, env = ns)
+
+  namespaceExport(ns, c('.ll','.l', '.s', '.q', '.dd', '.dl', '.di', '.o',  '.rm'))
 }
 
 andrea_quantide <-  utils::person(given =  'Andrea', 
