@@ -7,30 +7,11 @@ rm <- function() {
   invisible(NULL)
 }
 
-#' @title ll
-#' @description list all objects ls(all.names = T)
-ll <- function(){
-  base::ls(envir = globalenv(), all.names = TRUE)
-}
-# ---------------------------------------------------------------
-#' @title ls
-#' @description list all objects exclude hidden objects ls(all.names = F)
-l <- function(){
-  base::ls(envir = globalenv(), all.names = FALSE)
-}
 # ---------------------------------------------------------------
 #' @title q 
 #' @description quite without saving workspace
 q <- function(){
   base::quit(save =  'no') 
-}
-# ---------------------------------------------------------------
-#' @title lst 
-lst <- function() {
-
-  out <- tibble::tibble(obj = ll()) 
-  return(out)
-
 }
 
 # ----------------------------------------------------------
@@ -57,6 +38,7 @@ di <- function() {
 
 # --------------------------------------------------------------- 
 #' @title enriched ls()
+#' @export
 o <- function() {
   
   # may decide to change
@@ -86,8 +68,6 @@ o <- function() {
 #' @title binding 
 .onLoad <- function(libname, pkgname) {
   ns <-  asNamespace(pkgname)
-  makeActiveBinding(".ll", ll,  env = ns) 
-  makeActiveBinding(".l", l,  env = ns)
   makeActiveBinding(".s", base::search,  env = ns)
   makeActiveBinding(".q", q,  env = ns)
   makeActiveBinding(".dl", dl, env = ns)
@@ -96,7 +76,7 @@ o <- function() {
   makeActiveBinding(".o", o, env = ns)
   makeActiveBinding(".rm", rm, env = ns)
 
-  namespaceExport(ns, c('.ll','.l', '.s', '.q', '.dd', '.dl', '.di', '.o',  '.rm'))
+  namespaceExport(ns, c( '.s', '.q', '.dd', '.dl', '.di', '.o',  '.rm'))
 }
 
 andrea_quantide <-  utils::person(given =  'Andrea', 
