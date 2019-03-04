@@ -7,11 +7,31 @@ rm <- function() {
   invisible(NULL)
 }
 
-# ---------------------------------------------------------------
+# ----------------------------------------------------------
 #' @title q 
 #' @description quite without saving workspace
 q <- function(){
   base::quit(save =  'no') 
+}
+# ----------------------------------------------------------
+#' @title search
+#' @description list all attached packages
+#' @importFrom dplyr  %>% 
+#' @export
+p <- function() {
+ session <- sessionInfo()
+ pkg <- session$otherPkgs
+ name <-  lapply(pkg, '[[', 'Package') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)}) %>% unlist() 
+ version <-  lapply(pkg, '[[', 'Version') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)}) %>% unlist() 
+ depends <-  lapply(pkg, '[[', 'Depends') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)})  %>% unlist()
+
+ search <- gsub('package:', '' ,search()) 
+ position <- seq_along(search)[is.element(search, name)]
+
+ pkg <- data.frame(name, position , version, depends )
+ rownames(pkg) <- seq_len(nrow(pkg))
+ pkg
+
 }
 
 # ----------------------------------------------------------
@@ -68,7 +88,7 @@ o <- function() {
 #' @title binding 
 .onLoad <- function(libname, pkgname) {
   ns <-  asNamespace(pkgname)
-  makeActiveBinding(".s", base::search,  env = ns)
+  makeActiveBinding(".p", p,  env = ns)
   makeActiveBinding(".q", q,  env = ns)
   makeActiveBinding(".dl", dl, env = ns)
   makeActiveBinding(".dd", dd, env = ns)
@@ -76,7 +96,7 @@ o <- function() {
   makeActiveBinding(".o", o, env = ns)
   makeActiveBinding(".rm", rm, env = ns)
 
-  namespaceExport(ns, c( '.s', '.q', '.dd', '.dl', '.di', '.o',  '.rm'))
+  namespaceExport(ns, c( '.p', '.q', '.dd', '.dl', '.di', '.o',  '.rm'))
 }
 
 andrea_quantide <-  utils::person(given =  'Andrea', 
