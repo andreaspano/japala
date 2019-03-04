@@ -1,0 +1,61 @@
+---
+title: "Utility"
+author: "Andrea Spano"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Package Japala provides a small set of utility functions. Mainly shortcuts.
+
+Shortcuts are R functions binded to a sysmbol.
+
+All shortcuts begin with a dot: `.rm`, `.l` etc ... 
+
+First you need to load the package.
+
+```{r require}
+require(japala)
+```
+
+
+
+## `.rm`
+
+Shortcut `.rm` removes all objects from global ennvironment included dots hidden objects
+
+```{r rm}
+i <-  1
+.i <-  2
+ls(all.names = T)
+.rm
+ls(all.names =  T)
+```
+
+## `.o`
+
+Shortcut `.o` returns a tabular representation of objects in yout globalenv
+
+
+```{r o} 
+i <-  1
+j <- 2
+data <-  mtcars
+tibble <- dplyr::as_tibble(mtcars)
+.o
+```
+
+## `.p`
+
+Shortcut `.p` returns a data frame with three colums
+
