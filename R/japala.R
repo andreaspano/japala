@@ -21,9 +21,9 @@ q <- function(){
 p <- function() {
  session <- sessionInfo()
  pkg <- session$otherPkgs
- name <-  lapply(pkg, '[[', 'Package') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)}) %>% unlist() 
- version <-  lapply(pkg, '[[', 'Version') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)}) %>% unlist() 
- depends <-  lapply(pkg, '[[', 'Depends') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)})  %>% unlist()
+ name <-  unlist(lapply(pkg, '[[', 'Package') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)})) 
+ version <- unlist(lapply(pkg, '[[', 'Version') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)}))
+ depends <-  unlist(lapply(pkg, '[[', 'Depends') %>% lapply(function(x) {ifelse(is.null(x) , NA, x)}))
 
  search <- gsub('package:', '' ,search()) 
  position <- seq_along(search)[is.element(search, name)]
